@@ -26,7 +26,7 @@ describe("NFT Shop", async () => {
       accounts,
       erc20ContractFactory,
       erc721ContractFactory,
-      tokenSaleConractFactory,
+      tokenSaleContractFactory,
     ] = await Promise.all([
       ethers.getSigners(),
       ethers.getContractFactory("MyERC20"),
@@ -35,7 +35,7 @@ describe("NFT Shop", async () => {
     ]);
     paymentTokenContract = await erc20ContractFactory.deploy();
     await paymentTokenContract.deployed();
-    tokenSaleContract = await tokenSaleFactory.deploy(
+    tokenSaleContract = await tokenSaleContractFactory.deploy(
       TEST_RATIO, 
       paymentTokenContract.address
       );
