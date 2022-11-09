@@ -19,14 +19,14 @@ describe("NFT Shop", async () => {
   let erc20ContractFactory: MyERC20__factory;
   let erc721ContractFactory: MyERC721__factory;
   let tokenSaleContractFactory: TokenSale__factory;
-
+  let accounts: SignerWithAddress[];
 
   beforeEach(async () => {
-    const [
+     [
       accounts,
       erc20ContractFactory,
       erc721ContractFactory,
-      tokenSaleConractFactory,
+      tokenSaleContractFactory,
     ] = await Promise.all([
       ethers.getSigners(),
       ethers.getContractFactory("MyERC20"),
@@ -35,11 +35,13 @@ describe("NFT Shop", async () => {
     ]);
     paymentTokenContract = await erc20ContractFactory.deploy();
     await paymentTokenContract.deployed();
-    tokenSaleContract = await tokenSaleFactory.deploy(
+
+    tokenSaleContract = await tokenSaleContractFactory.deploy(
       TEST_RATIO, 
       paymentTokenContract.address
       );
     await tokenSaleContract.deployed();
+    
     const MINTER_ROLE = await paymentTokenContract.MINTER_ROLE();
     const roleTx = await paymentTokenContract.grantRole(
       MINTER_ROLE, 
